@@ -38,7 +38,8 @@
     </main>
 
     <script>
-        const apiKey = "https://pokeapi.co/api/v2/pokemon?";
+        // const apiKey = "https://pokeapi.co/api/v2/pokemon/";
+          const apiKey = "https://pokeapi.co/api/v2/pokemon"
         // const apiKey = "https://pokeapi.co/api/v2/pokemon";
         // const apiKey =      "https://pokeapi.co/api/v2/type/1/";
 
@@ -55,11 +56,13 @@
                         .then(pokemonData  => {
                                 displayPokeman(pokemonData );
                       });
-                });
+                    
+                    });
             
             })
             .catch(error => console.log(error));
-        
+            
+            
             function fetchPokemonData(url){
                 return fetch(url)
                 .then(response => response.json())
@@ -68,6 +71,7 @@
         });
 
         function displayPokeman(pokemon){
+            console.log(pokemon);
             let pokemonCard = document.getElementById("pokemanCard");    
             const div = document.createElement("div");
             div.innerHTML = `
