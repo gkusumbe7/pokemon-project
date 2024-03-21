@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,27 +8,30 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <title>TailwindCSS</title>
 </head>
+
 <body>
-    <main class="bg-yellow-100 flex flex-col flex-wrap p-5">
+    <main class="bg-yellow-300 flex flex-col flex-wrap p-5">
 
         <header class="flex flex-col justify-center items-center">
-            <img class="w-80" src="https://imgs.search.brave.com/GoU0rOtI6dj4IysMWfi0Pg-w6VNWGrdH3fuoAqQDgRM/rs:fit:500:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy85/Lzk4L0ludGVybmF0/aW9uYWxfUG9rJUMz/JUE5bW9uX2xvZ28u/c3Zn.svg" alt="">
+            <img class="w-80"
+                src="https://imgs.search.brave.com/GoU0rOtI6dj4IysMWfi0Pg-w6VNWGrdH3fuoAqQDgRM/rs:fit:500:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy85/Lzk4L0ludGVybmF0/aW9uYWxfUG9rJUMz/JUE5bW9uX2xvZ28u/c3Zn.svg"
+                alt="">
             <div class="flex flex-wrap  mt-2 justify-center">
                 <form action="#">
                     <select name="selectBox" id="selectBox"
                         class=" m-1 shadow-md border border-yellow-200 text-sm font-semibold p-2 rounded">
                         <option value="#">Type </option>
                     </select>
-
-                    <button
+                    <!-- <button
                         class="m-1  hover:bg-green-50 shadow-md border border-yellow-200 text-sm font-semibold p-2 rounded">Filter
-                        By Type</button>
+                        By Type</button> -->
+                    <input id="searchByName" class="m-1 shadow-md border border-yellow-200 text-sm font-semibold p-2 rounded" type="text"
+                        placeholder="Enter Pokeman Name">
 
                     <button
-                        class="m-1  hover:bg-green-50 shadow-md border border-yellow-200 text-sm font-semibold p-2 rounded">Reset</button>
+                        class="m-1 w-20 bg-yellow-100 hover:bg-green-50 shadow-md border border-yellow-400  text-sm font-semibold p-2 rounded">Reset</button>
 
-                    <input class="m-1 shadow-md border border-yellow-200 text-sm font-semibold p-2 rounded"
-                        type="text" placeholder="Enter Pokeman Name">
+
                 </form>
             </div>
 
@@ -39,55 +43,80 @@
 
     <script>
         // const apiKey = "https://pokeapi.co/api/v2/pokemon/";
-          const apiKey = "https://pokeapi.co/api/v2/pokemon"
+        const apiKey = "https://pokeapi.co/api/v2/pokemon"
         // const apiKey = "https://pokeapi.co/api/v2/pokemon";
         // const apiKey =      "https://pokeapi.co/api/v2/type/1/";
 
 
-        document.addEventListener("DOMContentLoaded" , function(){
-            fetch(apiKey)
-            .then(response => response.json())
-            .then(data => {
-                const pokemons = data.results;
-                // console.log(pokemons);   
-                // pokemonsData(pokemons);
-                pokemons.forEach(pokemon => {
-                      fetchPokemonData(pokemon.url)
-                        .then(pokemonData  => {
-                                displayPokeman(pokemonData );
-                      });
-                    
-                    });
-            
-            })
-            .catch(error => console.log(error));
-            
-            
-            function fetchPokemonData(url){
-                return fetch(url)
-                .then(response => response.json())
-                .then(data=>data);
+        document.addEventListener("DOMContentLoaded", function () {
+            for (let i = 1; i <= 151; i++) {
+                fetchPokemonData(i)
+                    .then(pokemonData => {
+                        displayPokemon(pokemonData);
+                    })
+                    .catch(error => console.log(error));
+
             }
+
+            function fetchPokemonData(id) {
+                return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+                    .then(response => response.json())
+                    .then(data => data)
+                    .catch(error => console.log(error));
+            }
+
+            //     fetch(apiKey)
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             const pokemons = data.results;
+            //             // console.log(pokemons);   
+            //             // pokemonsData(pokemons);
+            //             pokemons.forEach(pokemon => {
+            //                 fetchPokemonData(pokemon.url)
+            //                     .then(pokemonData => {
+            //                         displayPokeman(pokemonData);
+            //                     });
+
+            //             });
+
+            //         })
+            //         .catch(error => console.log(error));
+
+
+
+            //     function fetchPokemonData(url) {
+            //         return fetch(url)
+            //             .then(response => response.json())
+            //             .then(data => data);
+            //     }
         });
 
-        function displayPokeman(pokemon){
+
+
+        function displayPokemon(pokemon) {
             console.log(pokemon);
-            let pokemonCard = document.getElementById("pokemanCard");    
+            console.log(pokemon);
+            let pokemonCard = document.getElementById("pokemanCard");
             const div = document.createElement("div");
             div.innerHTML = `
-            <div  class=" bg-white w-40 h-40 shadow-md rounded mt-5 p-8">
-            <div class="h-3/4 w-full">
-                <img class="w-full h-full object-cover rounded-t"
+            <div  class=" bg-black w-40  h-48 shadow-md rounded mt-5  p-6">
+                <div class="h-3/4 w-full  ">
+                <span class="text-xs font-bold text-yellow-300">${pokemon.id}</span> 
+                <img class="w-full h-full object-cover rounded-t hover:bg-gray-900"
                     src="${pokemon.sprites.front_default}"
                     alt="piña">
             </div>
-            <div class="flex flex-col">
-                    <span class="text-center font-semibold uppercase ">${pokemon.name}</span>                
-                     <p class="text-gray-600 text-sm leading-5"></p>
+            <div class="flex flex-col mt-2">
+                <span class="text-center font-semibold uppercase text-yellow-300 ">${pokemon.name}</span>                
+                <p class="text-gray-300 text-center "></p>
             </div>
             </div>`;
             pokemonCard.append(div);
         }
+
+        let searchByName = document.getElementById("searchByName");
+
+
     </script>
 </body>
 
